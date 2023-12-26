@@ -35,7 +35,7 @@ func main() {
 	fmt.Scan(&comando) //O & é como se fosse o endereço da varivavel, necessario pois uma variavel declarada sem valor retorna zero ou vazia por padrão
 	fmt.Println("A opção escolhida foi:", comando)
 
-	if comando == 1 {
+	/*if comando == 1 {
 		fmt.Println("Monitorando....")
 	} else if comando == 2 {
 		fmt.Println("Exibindo logs.....")
@@ -43,5 +43,16 @@ func main() {
 		fmt.Println("Saindo...")
 	} else {
 		fmt.Println("Opção inexistente")
-	} //Não utiliza paranteses para if/else
+	}*/ //Não utiliza paranteses para if/else
+
+	switch comando {
+	case 1:
+		fmt.Println("Monitorando....")
+	case 2:
+		fmt.Println("Exibindo logs.....")
+	case 0:
+		fmt.Println("Saindo...")
+	default:
+		fmt.Println("Opção inexistente")
+	} //existe o break no Go
 }
