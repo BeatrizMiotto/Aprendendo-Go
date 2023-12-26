@@ -24,7 +24,7 @@ func main() {
 	fmt.Println("Hello", nome, sobrenome, "sabemos que sua idade é de", idade) //para concatenar usa-se virgula
 	fmt.Println("Nosso progarama está na versão", versao, "ano de", ano)
 	//se não utilizar uma varivel ele gera um erro " declared and not used", ele não deixa declarar uma variavel e não usar.
-	fmt.Println("O tipo da varivel sobrenome é: ", reflect.TypeOf(sobrenome)) //Para descobrir o tipo de varivel usa-se o reflect.Typeof.
+	fmt.Println("O tipo da varivel sobrenome é: ", reflect.TypeOf(sobrenome)) //Para descobrir o tipo de varivel usa-se o reflect.Typeof
 
 	/*//Menu
 	fmt.Println("Olá", nome, sobrenome)
