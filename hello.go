@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 func main() {
 
-	var nome string = "Bia"
+	//var nome string = "Bia"
 	//nas variaveis: declara o nome e depois coloca o tipo.
 
-	var sobrenome = "Miotto" //Mas você não precisa declarar o tipo da variavel se não quiser.
+	//var sobrenome = "Miotto" //Mas você não precisa declarar o tipo da variavel se não quiser.
 
 	//var idade int = 33
 	/*no tipo int se não for atribuido um valor para a variavel ele retorna zero, o mesmo para o tipo float ele retorna 0.0,
@@ -26,14 +27,17 @@ func main() {
 	//fmt.Println("O tipo da varivel sobrenome é: ", reflect.TypeOf(sobrenome)) //Para descobrir o tipo de varivel usa-se o reflect.Typeof
 
 	//Menu
-	fmt.Println("Olá", nome, sobrenome)
-	fmt.Println("1- Iniciar Monitoramento")
-	fmt.Println("2- Exibir Logs")
-	fmt.Println("0- Sair")
+	//fmt.Println("Olá", nome, sobrenome)
+	//fmt.Println("1- Iniciar Monitoramento")
+	//fmt.Println("2- Exibir Logs")
+	//fmt.Println("0- Sair")
+	inicio()
 
-	var comando int
+	menu()
+
+	/*var comando int
 	fmt.Scan(&comando) //O & é como se fosse o endereço da varivavel, necessario pois uma variavel declarada sem valor retorna zero ou vazia por padrão
-	fmt.Println("A opção escolhida foi:", comando)
+	fmt.Println("A opção escolhida foi:", comando)*/
 
 	/*if comando == 1 {
 		fmt.Println("Monitorando....")
@@ -45,6 +49,8 @@ func main() {
 		fmt.Println("Opção inexistente")
 	}*/ //Não utiliza paranteses para if/else
 
+	comando := leComando()
+
 	switch comando {
 	case 1:
 		fmt.Println("Monitorando....")
@@ -52,7 +58,27 @@ func main() {
 		fmt.Println("Exibindo logs.....")
 	case 0:
 		fmt.Println("Saindo...")
+		os.Exit(0)
 	default:
 		fmt.Println("Opção inexistente")
+		os.Exit(-1)
 	} //existe o break no Go
+}
+
+func inicio() {
+	nome := "Bia"
+	sobrenome := "Miotto"
+	fmt.Println("Olá", nome, sobrenome)
+}
+func menu() {
+	fmt.Println("1- Iniciar Monitoramento")
+	fmt.Println("2- Exibir Logs")
+	fmt.Println("0- Sair")
+}
+
+func leComando() int {
+	var leComando int
+	fmt.Scan(&leComando)
+	fmt.Println("A opção escolhida foi:", leComando)
+	return leComando
 }
