@@ -2,36 +2,65 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+	"os"
 )
 
 func main() {
 
+	/*nome, semanas := devolveNomeSemanas() //caso não queira retornar um dos valores basta colocar o "_" exemplo "_,semans :=devolveNomeSemanas()".
+	fmt.Println(nome, "ela tem, ", semanas, "semanas")*/
+
+	inicio()
+
+	menu()
+
+	comandolido := leComando()
+
+	switch comandolido {
+	case 1:
+		iniciaMonitoramento()
+	case 2:
+		fmt.Println("Exibindo logs......")
+	case 0:
+		fmt.Println("Saindo.....")
+		os.Exit(0)
+	default:
+		fmt.Println("Opção invalida")
+		os.Exit(-1)
+	}
+
+}
+
+func inicio() {
 	var nome string = "Bia"
-	//nas variaveis: declara o nome e depois coloca o tipo.
-
-	var sobrenome = "Miotto" //Mas você não precisa declarar o tipo da variavel se não quiser.
-
-	//var idade int = 33
-	/*no tipo int se não for atribuido um valor para a variavel ele retorna zero, o mesmo para o tipo float ele retorna 0.0,
-	para toda variavel que não for atribuida valor ela sempre retorna vazia.*/
-
-	//var versao float32 = 1.1
-	//tipo flutuante tem dois tipo 32 e 64.
-
-	//ano := 2023 // podemos simplificar a declaração de uma variavel utilizando := não necessitando utilizar var no inicio.
-
-	//fmt.Println("Hello", nome, sobrenome, "sabemos que sua idade é de", idade) //para concatenar usa-se virgula
-	//fmt.Println("Nosso progarama está na versão", versao, "ano de", ano)
-	//se não utilizar uma varivel ele gera um erro " declared and not used", ele não deixa declarar uma variavel e não usar.
-	//fmt.Println("O tipo da varivel sobrenome é: ", reflect.TypeOf(sobrenome)) //Para descobrir o tipo de varivel usa-se o reflect.Typeof
-
-	//Menu
+	var sobrenome = "Miotto"
 	fmt.Println("Olá", nome, sobrenome)
+
+}
+func menu() {
 	fmt.Println("1- Iniciar Monitoramento")
 	fmt.Println("2- Exibir Logs")
 	fmt.Println("0- Sair")
 
-	var comando int
-	fmt.Scan(&comando) //O & é como se fosse o endereço da varivavel, necessario pois uma variavel declarada sem valor retorna zero ou vazia por padrão
-	fmt.Println("A opção escolhida foi:", comando)
 }
+func leComando() int {
+	var comando int
+	fmt.Scan(&comando)
+	fmt.Println("A opção escolhida foi:", comando)
+	return comando
+}
+func iniciaMonitoramento() {
+	fmt.Println("Melhorando.....")
+	site := "https://www.alura.com.br"
+	resposta, _ := http.Get(site)
+	fmt.Println(resposta)
+
+}
+
+// Funções com multiplos retornos
+/*func devolveNomeSemanas() (string, int) {
+	nome := "Larissa"
+	semanas := 27
+	return nome, semanas
+}*/
