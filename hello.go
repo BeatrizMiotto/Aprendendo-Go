@@ -13,21 +13,23 @@ func main() {
 
 	inicio()
 
-	menu()
+	for { //No go não tem while, só for
+		menu()
 
-	comandolido := leComando()
+		comandolido := leComando()
 
-	switch comandolido {
-	case 1:
-		iniciaMonitoramento()
-	case 2:
-		fmt.Println("Exibindo logs......")
-	case 0:
-		fmt.Println("Saindo.....")
-		os.Exit(0)
-	default:
-		fmt.Println("Opção invalida")
-		os.Exit(-1)
+		switch comandolido {
+		case 1:
+			iniciaMonitoramento()
+		case 2:
+			fmt.Println("Exibindo logs......")
+		case 0:
+			fmt.Println("Saindo.....")
+			os.Exit(0)
+		default:
+			fmt.Println("Opção invalida")
+			os.Exit(-1)
+		}
 	}
 
 }
@@ -54,7 +56,12 @@ func iniciaMonitoramento() {
 	fmt.Println("Melhorando.....")
 	site := "https://www.alura.com.br"
 	resposta, _ := http.Get(site)
-	fmt.Println(resposta)
+	//fmt.Println(resposta)
+	if resposta.StatusCode == 200 {
+		fmt.Println("Site:", site, "Carregado com sucesso!")
+	} else {
+		fmt.Println("Site:", site, "O site não está disponivel. Status Code:", resposta.StatusCode)
+	}
 
 }
 
