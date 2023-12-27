@@ -4,12 +4,18 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 )
+
+const monitoramentos = 3
+const delay = 5
 
 func main() {
 
 	/*nome, semanas := devolveNomeSemanas() //caso não queira retornar um dos valores basta colocar o "_" exemplo "_,semans :=devolveNomeSemanas()".
 	fmt.Println(nome, "ela tem, ", semanas, "semanas")*/
+
+	//exibeNomes()
 
 	inicio()
 
@@ -53,16 +59,32 @@ func leComando() int {
 	return comando
 }
 func iniciaMonitoramento() {
-	fmt.Println("Melhorando.....")
-	site := "https://www.alura.com.br"
+	fmt.Println("Monitorando.....")
+
+	//var sites [4]string
+	/*todo array no go tem um tamanho fixo, dentro do [] deve informar o tanhanho,
+	usa-se os slices ao inves de arrays pois como eles são fixos e os slices não são*/
+
+	sites := []string{"https://random-status-code.herokuapp.com/", "https://www.alura.com.br", "https://app.daily.dev/", "https://www.google.com.br"}
+
+	for i := 0; i < monitoramentos; i++ {
+		for i, site := range sites {
+			fmt.Println("Testando site", i, ":", site)
+			testaSites(site)
+		}
+		time.Sleep(delay * time.Second)
+		fmt.Println("")
+	}
+
+}
+func testaSites(site string) {
 	resposta, _ := http.Get(site)
-	//fmt.Println(resposta)
+
 	if resposta.StatusCode == 200 {
 		fmt.Println("Site:", site, "Carregado com sucesso!")
 	} else {
 		fmt.Println("Site:", site, "O site não está disponivel. Status Code:", resposta.StatusCode)
 	}
-
 }
 
 // Funções com multiplos retornos
@@ -70,4 +92,17 @@ func iniciaMonitoramento() {
 	nome := "Larissa"
 	semanas := 27
 	return nome, semanas
+}*/
+
+/*func exibeNomes() {
+	nomes := []string{"Larissa", "Beatriz", "Eduardo"}
+	fmt.Println(nomes)
+	fmt.Println(reflect.TypeOf(nomes))
+	fmt.Println("quantidades de itens:", len(nomes))
+	fmt.Println("A capacidade é de:", cap(nomes))
+
+	nomes = append(nomes, "Jasmine", "Docinho")
+	fmt.Println("quantidades de itens:", len(nomes))
+	fmt.Println("A capacidade é de:", cap(nomes))
+
 }*/
