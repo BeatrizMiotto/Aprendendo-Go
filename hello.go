@@ -4,13 +4,15 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
 
-const monitoramentos = 3
+const monitoramentos = 2
 const delay = 5
 
 func main() {
@@ -31,7 +33,7 @@ func main() {
 		case 1:
 			iniciaMonitoramento()
 		case 2:
-			fmt.Println("Exibindo logs......")
+			imprimeLogs()
 		case 0:
 			fmt.Println("Saindo.....")
 			os.Exit(0)
@@ -77,7 +79,6 @@ func iniciaMonitoramento() {
 			testaSites(site)
 		}
 		time.Sleep(delay * time.Second)
-		fmt.Println("")
 	}
 
 }
@@ -91,8 +92,10 @@ func testaSites(site string) {
 
 	if resposta.StatusCode == 200 {
 		fmt.Println("Site:", site, "Carregado com sucesso!")
+		registraLog(site, true)
 	} else {
 		fmt.Println("Site:", site, "O site não está disponivel. Status Code:", resposta.StatusCode)
+		registraLog(site, false)
 	}
 }
 
@@ -128,6 +131,31 @@ func leSitesDoArquivo() []string {
 	return sites
 
 } //nil em go é a mesma coisa que null
+
+func registraLog(site string, status bool) {
+
+	arquivo, err := os.OpenFile("log.txt", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0666)
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro:", err)
+	}
+
+	arquivo.WriteString(time.Now().Format("02/01/2006 15:04:05") + site + "- online: " + strconv.FormatBool(status) + "\n")
+
+	arquivo.Close()
+
+}
+
+func imprimeLogs() {
+	fmt.Println("Exibindo logs......")
+
+	arquivo, err := ioutil.ReadFile("log.txt")
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro: ", err)
+	}
+	fmt.Println(string(arquivo))
+}
 
 // Funções com multiplos retornos
 /*func devolveNomeSemanas() (string, int) {
