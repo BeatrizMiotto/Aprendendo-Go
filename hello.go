@@ -1,9 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -65,7 +68,8 @@ func iniciaMonitoramento() {
 	/*todo array no go tem um tamanho fixo, dentro do [] deve informar o tanhanho,
 	usa-se os slices ao inves de arrays pois como eles são fixos e os slices não são*/
 
-	sites := []string{"https://random-status-code.herokuapp.com/", "https://www.alura.com.br", "https://app.daily.dev/", "https://www.google.com.br"}
+	//sites := []string{"https://random-status-code.herokuapp.com/", "https://www.alura.com.br", "https://app.daily.dev/", "https://www.google.com.br"}
+	sites := leSitesDoArquivo()
 
 	for i := 0; i < monitoramentos; i++ {
 		for i, site := range sites {
@@ -78,7 +82,12 @@ func iniciaMonitoramento() {
 
 }
 func testaSites(site string) {
-	resposta, _ := http.Get(site)
+
+	resposta, err := http.Get(site)
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro:", err)
+	}
 
 	if resposta.StatusCode == 200 {
 		fmt.Println("Site:", site, "Carregado com sucesso!")
@@ -86,6 +95,39 @@ func testaSites(site string) {
 		fmt.Println("Site:", site, "O site não está disponivel. Status Code:", resposta.StatusCode)
 	}
 }
+
+func leSitesDoArquivo() []string {
+
+	var sites []string
+
+	arquivo, err := os.Open("sites.txt")
+
+	//arquivo, err := ioutil.ReadFile("sites.txt")
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro:", err)
+	}
+
+	leitor := bufio.NewReader(arquivo)
+
+	for {
+		linha, err := leitor.ReadString('\n')
+
+		linha = strings.TrimSpace(linha)
+
+		sites = append(sites, linha)
+
+		if err == io.EOF {
+			break
+		}
+
+	}
+
+	arquivo.Close()
+
+	return sites
+
+} //nil em go é a mesma coisa que null
 
 // Funções com multiplos retornos
 /*func devolveNomeSemanas() (string, int) {
